@@ -2,8 +2,11 @@
 const app =Vue.createApp({
     data() {
         return {
-
+            index:0,
             selectedAnswer:'',
+            count:3,
+            correctAnswers:0,
+            wrongAnswers:0,
 
             questions:[
                 {
@@ -31,7 +34,6 @@ const app =Vue.createApp({
                     answers:{
                         a:'true ',
                         b:'false',
-                      
                     },
                     correct_answer:'b'
                 },
@@ -41,9 +43,26 @@ const app =Vue.createApp({
     },
     methods: {
         answered(event){
+         
             this.selectedAnswer = event.target.value
-            console.log( this.selectedAnswer)
+            if(this.selectedAnswer==this.questions[this.index]['correct_answer']){
+                this.correctAnswers++
+            }else
+            {
+                this.wrongAnswers++
+                
 
+            }
+
+        },
+        nextQuestion(){
+            this.index++;
+            this.selectedAnswer=''
+            console.log(this.selectedAnswer)
+        },
+        ShowResult(){
+
+            this.index++;
         }
     },
 })

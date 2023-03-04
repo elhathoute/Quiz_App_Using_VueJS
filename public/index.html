@@ -17,25 +17,50 @@
         class="bg-white p-12 rounded-lg shadow-lg w-full mt-8"
         
         >
+        <div v-if="index<count">
 <p class="text-2xl font-bold text-center underline underline-offset-8">
-    {{ questions[0]['question']}}
+    {{ questions[index]['question']}}
 </p>
 <label 
 :for="key"
  class="block mt-4 border   border-gray-300 rounded-lg py-2 px-6 text-lg"
- v-for="answer,key in questions[0]['answers'] "
- :class="{' hover:bg-blue-200  cursor-pointer':selectedAnswer == ''}"
- >
+ v-for="answer,key in questions[index]['answers'] "
+ :class="
+ {' hover:bg-blue-200  cursor-pointer':selectedAnswer == ''},
+ {'bg-red-400':selectedAnswer==key},
+ {' bg-green-400':key == questions[index]['correct_answer'] && selectedAnswer !='' }
+ 
+ ">
     <input 
     type="radio" 
     :id="key" 
-  
+class="hidden"
     :value="key"
     @change=answered($event)
-    :disabled="selectedAnswer !='' "
+    :disabled="selectedAnswer !=''"
+   :checked="selectedAnswer !=''"
     >
    {{ answer }}
 </label>
+
+<div class="mt-6 flow-root">
+    <button
+     class="float-right p-3 bg-indigo-500 text-white text-sm font-bold rounded "
+     v-show="selectedAnswer!='' && index!=count-1 "
+     @click="nextQuestion">Next
+    </button>
+     <button
+     class="float-right p-3 bg-indigo-500 text-white text-sm font-bold rounded "
+     v-show="selectedAnswer !='' && index==count-1"
+     @click="ShowResult">Finish
+    </button> 
+</div>
+</div>
+<div v-else>
+Result : 
+correct:{{ correctAnswers }}
+wrong:{{ wrongAnswers }}
+</div>
 
         </div>
         </div>
