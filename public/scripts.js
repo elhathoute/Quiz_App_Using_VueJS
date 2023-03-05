@@ -63,6 +63,12 @@ const app =Vue.createApp({
         ShowResult(){
 
             this.index++;
+        },
+        resetQuiz(){
+           this.index=0
+           this.selectedAnswer=''
+           this.correctAnswers=0
+           this.wrongAnswers=0 
         }
     },
 })
